@@ -11,7 +11,7 @@ import Card from "../components/Card";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-import { dislike, fetchStart, fetchSuccess, like } from "../redux/videoSlice";
+import { dislike, fetchSuccess, like } from "../redux/videoSlice";
 import { format } from "timeago.js";
 import { subscription } from "../redux/userSlice";
 import Recommendation from "../components/Recommendation";
@@ -122,7 +122,6 @@ const Video = () => {
   const dispatch = useDispatch();
 
   const path = useLocation().pathname.split("/")[2];
-  console.log(path)
 
   const [channel, setChannel] = useState({});
 
@@ -130,7 +129,6 @@ const Video = () => {
     const fetchData = async () => {
       try {
         const videoRes = await axios.get(`/videos/find/${path}`);
-
         const channelRes = await axios.get(
           `/users/find/${videoRes.data.userId}`
         );
@@ -158,7 +156,7 @@ const Video = () => {
   };
 
   //TODO: DELETE VIDEO FUNCTIONALITY
-
+  if (!currentVideo) return <div>loading..</div>;
   return (
     <Container>
       <Content>
